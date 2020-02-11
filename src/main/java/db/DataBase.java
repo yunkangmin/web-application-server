@@ -7,6 +7,9 @@ import com.google.common.collect.Maps;
 
 import model.User;
 
+/**
+ * 데이터베이스 역할을 하는 클래스
+ * */
 public class DataBase {
     private static Map<String, User> users = Maps.newHashMap();
 

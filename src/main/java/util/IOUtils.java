@@ -15,6 +15,8 @@ public class IOUtils {
     public static String readData(BufferedReader br, int contentLength) throws IOException {
         char[] body = new char[contentLength];
         br.read(body, 0, contentLength);
+        
+        //캐릭터 배열에 있는 값을 String으로 변환해줌
         return String.copyValueOf(body);
     }
 }
