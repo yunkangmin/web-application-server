@@ -31,8 +31,10 @@ public class RequestHandler extends Thread {
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
             HttpRequest request = new HttpRequest(in);
             HttpResponse response = new HttpResponse(out);
-
+            
+            //"JSESSIONID"라는 이름의 쿠키값을 가져온다.
             if (request.getCookies().getCookie(HttpSessions.SESSION_ID_NAME) == null) {
+            	log.debug("???");
                 response.addHeader("Set-Cookie", HttpSessions.SESSION_ID_NAME + "=" + UUID.randomUUID());
             }
 

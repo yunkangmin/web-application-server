@@ -24,6 +24,7 @@ public class HttpRequest {
 			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 			requestLine = new RequestLine(createRequestLine(br));
 			requestParams.addQueryString(requestLine.getQueryString());
+			//요청라인을 제외한 요청헤더를 headers 객체에 키와 밸류값으로 관리한다.
 			headers = processHeaders(br);
 			requestParams.addBody(IOUtils.readData(br, headers.getContentLength()));
 		} catch (IOException e) {
@@ -42,7 +43,10 @@ public class HttpRequest {
 	private HttpHeaders processHeaders(BufferedReader br) throws IOException {
 		HttpHeaders headers = new HttpHeaders();
 		String line;
+		//요청헤더에서 ""을 만날 때까지 읽는다.
+		//""는 요청본문과 요청헤더를 나누는 기준이다.
 		while (!(line = br.readLine()).equals("")) {
+			//요청헤더들의 정보를 저장하고 관리하는 headers
 			headers.add(line);
 		}
 		return headers;
@@ -64,6 +68,7 @@ public class HttpRequest {
 		return requestParams.getParameter(name);
 	}
 	
+	//쿠키값( name1=value1; name2=value2; name3=value3;...)을 키와 밸류형식으로 저장하고 관리하는 HttpCookie 객체를 반환한다.
 	public HttpCookie getCookies() {
 		return headers.getCookies();
 	}
